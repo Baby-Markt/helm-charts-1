@@ -142,8 +142,9 @@ data:
       {{- end  }}
       {{- end }}
 
-    {{- if .Values.config.udp.listeners }}
+    {{- if gt (len .Values.config.udp.listeners) 0 }}
     {{- range .Values.config.udp.listeners }}
+
     [[udp]]
       {{- range $key, $value := . }}
       {{- $tp := typeOf $value }}

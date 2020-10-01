@@ -171,7 +171,6 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
 
-
 ## Add custom volume and volumeMounts
 # volumes:
 #   - name: ssl-cert-volume
@@ -236,7 +235,8 @@ config:
   graphite: {}
   collectd: {}
   opentsdb: {}
-  udp: {}
+  udp:
+    listeners: []
   continuous_queries: {}
   tls: {}
 
