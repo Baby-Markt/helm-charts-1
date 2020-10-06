@@ -61,3 +61,24 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Extract the bind address without leading colon.
+*/}}
+{{- define "influxdb.udp.parseBindAddress" -}}
+{{- $bindAddress := index . "bind-address" -}}
+{{- $colonList := regexFindAll ":" $bindAddress -1 -}}
+{{- $colonCount := len $colonList -}}
+{{- if gt $colonCount 0 -}}
+{{ last (regexSplit ":" $bindAddress -1) | atoi }}
+{{- else -}}
+{{ $bindAddress | atoi }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+The name for the udp service port.
+*/}}
+{{- define "influxdb.udp.servicePortName" -}}
+udp-{{ .database | replace "_" "-" }}
+{{- end -}}

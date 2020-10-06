@@ -98,6 +98,7 @@ The following table lists configurable parameters, their descriptions, and their
 | config.collectd | [Details](https://docs.influxdata.com/influxdb/v1.7/administration/config/#collectd) | {} |
 | config.opentsdb | [Details](https://docs.influxdata.com/influxdb/v1.7/administration/config/#opentsdb) | {} |
 | config.udp | [Details](https://docs.influxdata.com/influxdb/v1.7/administration/config/#udp) | {} |
+| config.udp.listeners | Define multiple udp listeners [Details](https://docs.influxdata.com/influxdb/v1.7/administration/config/#udp) | [] |
 | config.continous_queries | [Details](https://docs.influxdata.com/influxdb/v1.7/administration/config/#continuous-queries) | {} |
 | config.tls | [Details](https://docs.influxdata.com/influxdb/v1.7/administration/config/#tls) | {} |
 | initScripts.enabled | Boolean flag to enable and disable initscripts. If the container finds any files with the extensions .sh or .iql inside of the /docker-entrypoint-initdb.d folder, it will execute them. The order they are executed in is determined by the shell. This is usually alphabetical order. | false |

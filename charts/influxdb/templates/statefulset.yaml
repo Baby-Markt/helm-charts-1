@@ -67,10 +67,20 @@ spec:
           containerPort: {{ .Values.config.collectd.bind_address |  default 25826 }}
           protocol: UDP
         {{- end }}
+        {{- if gt (len .Values.config.udp.listeners) 0 }}
+        {{- range .Values.config.udp.listeners }}
+        {{- if .enabled }}
+        - name: {{ include "influxdb.udp.servicePortName" . }}
+          containerPort: {{ include "influxdb.udp.parseBindAddress" . }}
+          protocol: UDP
+        {{- end }}
+        {{- end }}
+        {{- else }}
         {{- if .Values.config.udp.enabled }}
         - name: udp
-          containerPort: {{ .Values.config.udp.bind_address | default 8089 }}
+          containerPort: {{ index .Values.config.udp "bind-address" | default 8089 }}
           protocol: UDP
+        {{- end }}
         {{- end }}
         {{- if .Values.config.opentsdb.enabled }}
         - name: opentsdb

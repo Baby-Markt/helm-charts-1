@@ -142,8 +142,20 @@ data:
       {{- end  }}
       {{- end }}
 
-    # TODO: allow multiple udp listeners with templates
+    {{- if gt (len .Values.config.udp.listeners) 0 }}
+    {{- range .Values.config.udp.listeners }}
 
+    [[udp]]
+      {{- range $key, $value := . }}
+      {{- $tp := typeOf $value }}
+      {{- if eq $tp "string" }}
+      {{ $key }} = {{ $value | quote }}
+      {{- else }}
+      {{ $key }} = {{ $value }}
+      {{- end  }}
+      {{- end }}
+    {{- end }}
+    {{- else }}
     [[udp]]
       {{- range $key, $value := index .Values.config.udp }}
       {{- $tp := typeOf $value }}
@@ -153,6 +165,7 @@ data:
       {{ $key }} = {{ $value }}
       {{- end  }}
       {{- end }}
+    {{- end }}
 
     [continuous_queries]
       {{- range $key, $value := index .Values.config.continuous_queries }}

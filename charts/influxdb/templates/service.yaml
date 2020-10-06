@@ -28,11 +28,22 @@ spec:
     protocol: UDP
     targetPort: collectd
   {{- end }}
+  {{- if gt (len .Values.config.udp.listeners) 0 }}
+  {{- range .Values.config.udp.listeners }}
+  {{- if .enabled }}
+  - name: {{ include "influxdb.udp.servicePortName" . }}
+    port: {{ include "influxdb.udp.parseBindAddress" . }}
+    protocol: UDP
+    targetPort: {{ include "influxdb.udp.servicePortName" . }}
+  {{- end }}
+  {{- end }}
+  {{- else }}
   {{- if .Values.config.udp.enabled }}
   - name: udp
-    port: {{ .Values.config.udp.bind_address | default 8089 }}
+    port: {{ index .Values.config.udp "bind-address" | default 8089 }}
     protocol: UDP
     targetPort: udp
+  {{- end }}
   {{- end }}
   {{- if .Values.config.opentsdb.enabled }}
   - name: opentsdb
